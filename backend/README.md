@@ -1,161 +1,251 @@
 <p align="center">
-  <img src="/docs/images/vertical-ternakku.png" alt="TernakKu Logo" width="180">
+  <img src="../assets/logo.png" alt="TernakKu Logo" width="180">
 </p>
 
 <p align="center">
-
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-
+  <img src="../assets/icon/typescript.svg" alt="TypeScript" height="20" />
+  &nbsp;&nbsp;
+  <img src="../assets/icon/nestjs.svg" alt="NestJS" height="20" />
+  &nbsp;&nbsp;
+  <img src="../assets/icon/mysql.svg" alt="MySQL" height="20" />
+  &nbsp;&nbsp;
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../assets/icon/prisma-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="../assets/icon/prisma.svg" />
+    <img src="../assets/icon/prisma.svg" alt="Prisma" height="20" />
+  </picture>
+  &nbsp;&nbsp;
+  <img src="../assets/icon/zod.svg" alt="Zod" height="20" />
+  &nbsp;&nbsp;
+  <img src="../assets/icon/dayjs.png" alt="Day.js" height="20" />
 </p>
 
----
+The backend of **TernakKu** is a REST API built with NestJS, TypeScript, MySQL, and Prisma ORM. It powers the Flutter mobile application with secure authentication, farm management, and livestock tracking, using Zod for data validation and Day.js for date and time handling.
 
-## 📖 Deskripsi
+## 🛠️ Prerequisites
 
-**TernakKu** adalah aplikasi sistem informasi manajemen berbasis digital yang dirancang untuk membantu peternak dalam mengelola aktivitas operasional peternakan secara lebih mudah, cepat, dan terstruktur.
+Make sure the following tools and services are available before getting started:
 
-Aplikasi ini menggantikan proses pencatatan manual menjadi sistem pencatatan digital yang terintegrasi. Melalui TernakKu, peternak dapat mengelola profil peternakan, mencatat data inventaris dan silsilah genetika ternak, serta memantau riwayat setiap individu hewan secara real-time. Fitur pencatatan mencakup kejadian umum (kelahiran, sakit, kematian) hingga rekam medis khusus seperti penjadwalan dan pelacakan riwayat vaksinasi.
+- **Node.js** — a version compatible with the project.
+- **npm** — for dependency management.
+- **MySQL** — for the application database.
+- **Git** — for cloning the repository.
 
-Dengan digitalisasi pencatatan tersebut, TernakKu diharapkan mampu meningkatkan efisiensi operasional, menjaga akurasi data, serta membantu meningkatkan produktivitas usaha peternakan.
+## 🚀 Installation & Setup
 
----
+### 1. Clone the Repository
 
-## 🎯 Tujuan Pengembangan
+Clone the repository and navigate to the backend directory:
 
-TernakKu dikembangkan untuk membantu peternak dalam:
-
-- Melakukan digitalisasi pencatatan operasional peternakan secara terpusat.
-- Mengurangi kesalahan pencatatan manual terkait rekam jejak dan silsilah ternak.
-- Mempermudah pemantauan kondisi harian dan penjadwalan vaksinasi hewan.
-- Menyediakan arsitektur data kustom yang fleksibel (peternak dapat membuat kategori pencatatan sendiri).
-- Meningkatkan efisiensi pengelolaan usaha peternakan secara keseluruhan.
-
-## 📌 Use Case
-
-```mermaid
-flowchart LR
-    Peternak((Peternak))
-    Admin((Admin))
-    
-    subgraph Aplikasi TernakKu
-        direction TB
-        UC1([Registrasi Akun])
-        UC2([Login])
-        UC3([Kelola Profil Pengguna])
-        UC4([Kelola Profil Peternakan])
-        UC5([Kelola Data & Silsilah Ternak])
-        UC6([Kelola Riwayat Kondisi & Vaksinasi])
-        UC7([Kelola Master Data Parameter])
-    end
-    
-    %% Relasi Peternak
-    Peternak --- UC1
-    Peternak --- UC2
-    Peternak --- UC3
-    Peternak --- UC4
-    Peternak --- UC5
-    Peternak --- UC6
-    Peternak --- UC7
-    
-    %% Relasi Admin
-    Admin --- UC2
-    Admin --- UC3
-    Admin --- UC7
-    
-    %% Relasi Include (Harus Login terlebih dahulu)
-    UC3 -.->|<< include >>| UC2
-    UC4 -.->|<< include >>| UC2
-    UC5 -.->|<< include >>| UC2
-    UC6 -.->|<< include >>| UC2
-    UC7 -.->|<< include >>| UC2
+```bash
+git clone https://github.com/ahmadsubhand/TernakKu-IPB
+cd backend
 ```
 
-1. **UC1: Registrasi Akun**: Peternak mendaftarkan diri jika belum memiliki akun.
+If you have already cloned the unified repository, navigate directly to the `backend` folder.
 
-2. **UC2: Login**: Akses masuk ke dalam sistem menggunakan kredensial yang sudah didaftarkan, berlaku untuk Peternak dan Admin sesuai role masing-masing.
+### 2. Install Dependencies
 
-3. **UC3: Kelola Profil Pengguna**: Memperbarui informasi personal pengguna (Peternak/Admin).
+Install the project dependencies:
 
-4. **UC4: Kelola Profil Peternakan**: Peternak melengkapi dan memperbarui informasi dasar mengenai lokasi dan identitas peternakan yang dikelolanya.
-
-5. **UC5: Kelola Data & Silsilah Ternak**: Peternak melihat daftar inventaris, menambah/mengubah profil individu hewan, serta mendata garis keturunan (induk dan pejantan).
-
-6. **UC6: Kelola Riwayat Kondisi & Vaksinasi**: Peternak mencatat buku log harian (kejadian lahir, sakit, dll) serta mengatur jadwal dan rekam medis vaksinasi secara spesifik.
-
-7. **UC7: Kelola Master Data Parameter**: Admin bertugas mengelola parameter global (tipe hewan, kondisi, dan jenis vaksin bawaan sistem). Peternak juga memiliki akses ke modul ini untuk membuat parameter kustom yang khusus berlaku di peternakannya sendiri.
-
----
-
-## ⚙️ Activity Diagram
-
-```mermaid
-flowchart TD
-    Start([Mulai Aktivitas]) --> CekAkun{Sudah Punya Akun?}
-    
-    CekAkun -- Belum --> Registrasi[Registrasi Akun]
-    Registrasi --> Login
-    CekAkun -- Sudah --> Login[Login ke Aplikasi]
-    
-    Login --> Dashboard[Akses Dashboard Utama]
-    
-    Dashboard --> Pilihan{Pilih Aktivitas Bisnis}
-    
-    %% Cabang 1: Pengaturan Profil & Parameter
-    Pilihan -->|Persiapan Data Awal| Master[Kelola Info Peternakan & Parameter Kustom]
-    
-    %% Cabang 2: Manajemen Inventaris
-    Pilihan -->|Kelola Inventaris| Ternak[Tambah/Ubah Profil & Silsilah Ternak]
-    
-    %% Cabang 3: Operasional Harian
-    Pilihan -->|Pencatatan Harian| Riwayat[Input Log Kondisi & Jadwal Vaksinasi]
-    
-    %% Kembali ke pusat aktivitas
-    Master --> Dashboard
-    Ternak --> Dashboard
-    Riwayat --> Dashboard
-    
-    %% Selesai
-    Pilihan -->|Selesai Bekerja| Logout[Keluar Aplikasi / Logout]
-    Logout --> Finish([Selesai])
+```bash
+npm install
 ```
 
-1. **Titik Masuk (Autentikasi)**: Peternak memulai dengan mengecek apakah sudah memiliki akun. Jika belum, peternak melakukan registrasi terlebih dahulu, kemudian login ke dalam sistem.
+### 3. Configure Environment Variables
 
-2. **Pusat Kendali (Dashboard)**: Setelah berhasil login, peternak diarahkan ke Dashboard sebagai pusat kendali untuk memilih aktivitas operasional.
+Create a `.env` file in the backend root directory, alongside `package.json`, using `.env.example` as a reference.
 
-3. **Tiga Pilar Aktivitas Bisnis:**
-    - **Persiapan Data Awal**: Dilakukan saat pertama kali setup aplikasi. Peternak mendaftarkan lokasi peternakan dan dapat mendefinisikan tipe parameter kustom (seperti jenis kondisi atau vaksin khusus) jika template bawaan dari sistem kurang memadai.
-    - **Manajemen Inventaris**: Dilakukan ketika ada penambahan ternak baru, pembaruan identitas visual hewan, atau menautkan data silsilah (induk/pejantan) ke dalam sistem.
-    - **Pencatatan Harian**: Aktivitas operasional rutin. Peternak mencatat kondisi ternak secara aktual serta melakukan tracking rekam medis (seperti mencatat nomor batch vaksin dan menjadwalkan vaksinasi berikutnya).
+```bash
+cp .env.example .env
+```
 
-4. **Siklus Berulang**: etelah menyelesaikan satu tugas, peternak kembali ke Dashboard untuk melanjutkan tugas lain atau memilih keluar (logout) jika seluruh pekerjaan selesai.
+On Windows Command Prompt, you can use:
 
-## 🗄️ Entity Relationship Diagram (ERD)
+```dos
+copy .env.example .env
+```
 
-![Entity Reational Database](/docs/images/erd.png)
+Open `.env` and configure all required variables:
 
-1. **Autentikasi & Hak Akses (`users`, `roles`)**
-    - **Fitur Registrasi & Login**: Diakomodasi penuh dalam tabel `users` melalui atribut kredensial (`email`, `password`). Alur keamanan dan validasi menggunakan atribut `otp_code`, `otp_expiration`, dan `is_verified`.
-    - **Pemisahan Wewenang**: Atribut `role_id` pada tabel pengguna terhubung ke tabel referensi `roles`, berfungsi membedakan antarmuka dan hak akses antara Admin (pengelola sistem) dan Peternak (pengguna akhir).
+```dotenv
+PORT=3000
+NODE_ENV=development
+BASE_URL=http://localhost:3000
+CLIENT_URL=http://localhost:3000
+APP_NAME=TernakKu
 
-2. **Manajemen Profil Peternakan (`farms`)**
-    - **Kepemilikan Tunggal**: Atribut `user_id` pada tabel `farms` menggunakan *constraint* `[unique, not null]` sehingga satu pengguna hanya dapat mengelola satu peternakan.
+# Database
+DATABASE_URL="mysql://root:@localhost:3306/ternakku"
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USER=root
+DATABASE_PASSWORD=
+DATABASE_NAME=ternakku
 
-    - **Pemetaan Lokasi**: Fitur peta spasial (Google Maps/Leaflet) didukung oleh atribut `latitude` dan `longitude`.
+# JWT
+JWT_SECRET="your-super-secure-jwt-secret"
+ACCESS_TOKEN_EXPIRATION="15m"
+REFRESH_TOKEN_EXPIRATION="28d"
 
-3. **Inventaris & Silsilah Ternak (`livestocks`)**
-    - **Identifikasi Fleksibel**: Melalui atribut `tag_id`, `name`, dan `picture`, aplikasi tetap relevan bagi peternak berskala kecil yang mengidentifikasi hewan menggunakan nama/ciri fisik maupun peternak besar yang menggunakan nomor anting (*ear tag*).
-    - **Pelacakan Garis Keturunan**: Fitur silsilah atau genetika diimplementasikan dengan atribut `father_id` dan `mother_id` yang merujuk kembali ke ID utama di tabel `livestocks` yang sama.
+# Mailer
+MAILER_USER="email@gmail.com"
+MAILER_PASSWORD="abcd efgh ijkl mnop"
 
-4. **Arsitektur Master Data Dinamis (`animal_types`, `condition_types`, `vaccines`)**
-    - **Pola Desain Template**: Jika `farm_id` bernilai `null`, maka data tersebut berfungsi sebagai template global bawaan yang dibuat oleh Admin. Jika `farm_id` terisi, maka itu adalah kategori kustom yang dibuat mandiri oleh suatu peternakan.
-    - **Integritas Kode Data**: Implementasi *Composite Unique Key* pada blok *indexes* `{ (code, farm_id) [unique] }` memastikan peternak bebas membuat kode (`code`) kustom tanpa memicu bentrok dengan kode dari peternak lain, namun tetap mempertahankan keunikan di dalam peternakannya sendiri.
+# Admin Seeder
+ADMIN_USERNAME="admin"
+ADMIN_EMAIL="adminternakku@gmail.com"
+ADMIN_PASSWORD="1234Asd!"
+```
 
-5. **Pencatatan Operasional Harian (`condition_histories`, `vaccination_histories`)**
-    - **Kondisi Umum (`condition_histories`)**: Berfungsi sebagai *logbook*. Menghubungkan hewan terkait (`livestock_id`) dengan kejadian spesifik (`condition_type_id`) berdasarkan tanggal kejadian aktual (`record_date`) dan dilengkapi catatan tambahan (`notes`).
-    - **Rekam Medis Khusus (`vaccination_histories`)**: Dipisahkan dari tabel kondisi umum untuk melacak atribut medis khusus, seperti `batch_number`. Peternak dapat melacak nomor seri vaksin tertentu yang disuntikkan jika sewaktu-waktu terjadi wabah atau efek samping. Selain itu, peternak dapat menjadwalkan vaksinasi (`vaccination_date`) dan menandai status apakah sudah divaksinasi atau belum (`is_vaccinated`).
+Replace placeholder values with your actual configuration. Do not leave sensitive keys empty.
+
+#### Environment Variables Breakdown
+
+| Variable | Description |
+|---|---|
+| `PORT` | Port used by the backend server. |
+| `NODE_ENV` | Application environment (`development` or `production`). |
+| `BASE_URL` & `CLIENT_URL` | Base URLs for application routing and client communication. |
+| `DATABASE_URL` | Prisma connection string format for MySQL. |
+| `JWT_SECRET` | Secret key used for signing JWT access and refresh tokens. |
+| `ACCESS_TOKEN_EXPIRATION` & `REFRESH_TOKEN_EXPIRATION` | Lifespan duration for authentication tokens. |
+| `MAILER_USER` & `MAILER_PASSWORD` | SMTP credentials (e.g., Gmail account and App Password) for system emails. |
+| `ADMIN_*` | Initial admin credentials automatically provisioned by the database seeder. |
+
+Generate a strong cryptographic secret for `JWT_SECRET`. For example, using Node.js:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+#### Database Configuration
+
+Install and start MySQL, then create a database named `ternakku` if it does not already exist:
+
+```sql
+CREATE DATABASE ternakku;
+```
+
+Configure `DATABASE_URL` using the connection string format:
+
+```text
+mysql://username:password@host:port/database_name
+```
+
+Replace `username`, `password`, `host`, `port`, and `database_name` with your local MySQL credentials. If your password contains special characters, URL-encode them appropriately.
+
+### 4. Set Up Prisma & Database Migrations
+
+Prisma manages the database schema, migrations, and client generation.
+
+First, generate the Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+Apply the database migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+To inspect and manage database records visually through a browser interface, run:
+
+```bash
+npx prisma studio
+```
+
+### 5. Run the Backend
+
+Start the development server with live-reloading:
+
+```bash
+npm run start:dev
+```
+
+The API will be available at:
+
+```text
+http://localhost:3000
+```
+
+The actual port depends on the `PORT` value in `.env`.
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+To start the compiled production server:
+
+```bash
+npm run start:prod
+```
+
+## 📁 Project Structure
+
+```text
+backend/
+├── dist/                 # Compiled application output
+├── docs/                 # Project specification and documentation
+├── node_modules/         # Installed dependencies
+├── prisma/
+│   ├── migrations/       # Database migration history
+│   └── schema.prisma     # Database schema and models
+├── public/               # Static assets
+├── src/
+│   ├── common/           # Shared components and utilities
+│   ├── generated/        # Generated prisma client
+│   ├── modules/          # Feature modules and business logic
+│   │   └── livestock/
+│   │       ├── livestock.controller.ts     # API endpoints
+│   │       ├── livestock.model.d.ts        # Type declarations
+│   │       ├── livestock.module.ts         # Feature module
+│   │       ├── livestock.service.ts        # Business logic
+│   │       └── livestock.validation.ts     # Input validation
+│   ├── types/            # Shared TypeScript types
+│   ├── utils/            # Utility functions
+│   ├── validator/        # Shared validation logic
+│   ├── app.controller.ts # Root application controller
+│   ├── app.module.ts     # Root application module
+│   └── main.ts           # Application entry point
+├── templates/            # Email templates
+├── test/                 # Automated tests
+├── .env                  # Local environment variables
+├── .env.example          # Environment variable template
+├── .gitignore            # Git ignore rules
+├── .prettierrc           # Prettier configuration
+├── eslint.config.mjs     # ESLint configuration
+├── nest-cli.json         # NestJS CLI configuration
+└── package-lock.json     # Locked npm dependency versions
+├── package.json          # Project metadata and npm scripts
+├── prisma.config.ts      # Prisma configuration
+├── README.md             # Backend documentation
+├── tsconfig.build.json   # TypeScript build configuration
+└── tsconfig.json         # TypeScript compiler configuration
+```
+
+**Notes:**
+- Configure environment variables in `.env` using `.env.example` as a reference.
+- `dist/`,  `node_modules/`, and `src/generated/prisma/` are generated locally and should not be committed to version control.
+- Database schema changes are managed through Prisma migrations.
+
+## 🔐 Security Notes
+
+- Never commit `.env` or expose credentials, API secrets, JWT secrets, or Gmail App Passwords.
+- Keep `.env.example` populated with placeholder values only.
+- Use strong, unique secrets for `JWT_SECRET`.
+- Use production-specific environment variables and database credentials when deploying the application.
+- Run production migrations using `npx prisma migrate deploy` rather than using development migration commands.
+
+## 📚 Related Documentation
+
+- [Software Design Document (SDD)](./docs/sdd.md) — Use case diagram, activity diagram, and entity relationship diagram (ERD).
+- [Admin Postman Collection](./docs/Admin.postman_collection.json) — API requests for admin endpoints.
+- [User Postman Collection](./docs/User.postman_collection.json) — API requests for user endpoints.
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [MySQL Documentation](https://dev.mysql.com/doc/)

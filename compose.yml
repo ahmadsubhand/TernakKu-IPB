@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ternakku-api
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    networks:
+      - proxy_network
+      - db_network
+
+  # mysql on different container
+
+networks:
+  proxy_network:
+    external: true
+  db_network:
+    external: true
